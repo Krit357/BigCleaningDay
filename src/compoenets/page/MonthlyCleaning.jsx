@@ -84,11 +84,14 @@ const MonthlyCleaning = () => {
             </Button>
           </form>
 
-          <div className="">
+          <div className="flex flex-col justify-center items-center  w-25 h-auto">
             <p className="text-lg font-semibold text-center">Employee List</p>
             <ul className="flex justify-center">
               {[...employees, ...submitText].map((emp) => (
-                <li className="ml-1" key={uuidv4()}>
+                <li
+                  className="flex justify-center items-centerfirst:ml-0 ml-3 rounded drop-shadow "
+                  key={uuidv4()}
+                >
                   {emp.name}
                 </li>
               ))}
