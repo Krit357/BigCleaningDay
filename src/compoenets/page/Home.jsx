@@ -18,7 +18,7 @@ const Home = () => {
           </Link>
 
           <Link to="/daily">
-            <Button>ทำความสะอาดรายวัน</Button>
+            <Button>เวรทิ้งขยะ</Button>
           </Link>
         </div>
       </div>
