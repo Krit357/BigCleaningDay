@@ -6,7 +6,7 @@ const SideBar = () => {
   const links = [
     { to: "/", text: "หน้าแรก", icon: <MdHome /> },
     { to: "/month", text: "เวร รายเดือน", icon: <MdCalendarMonth /> },
-    { to: "/daily", text: "เวรรายวัน", icon: <FiClock /> },
+    { to: "/daily", text: "เวรทิ้งขยะ", icon: <FiClock /> },
   ];
 
   return (
