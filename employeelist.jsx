@@ -1,4 +1,9 @@
 const employees = [
+  { id: 10, name: "Min" },
+  { id: 11, name: "Candy" },
+  { id: 12, name: "Yok" },
+  { id: 13, name: "Ethan" },
+  { id: 1, name: "Chris" },
   { id: 2, name: "Yodang" },
   { id: 3, name: "Mook" },
   { id: 4, name: "Rose" },
@@ -7,11 +12,6 @@ const employees = [
   { id: 7, name: "Lucus" },
   { id: 8, name: "Sky" },
   { id: 9, name: "Hut" },
-  { id: 10, name: "Min" },
-  { id: 11, name: "Candy" },
-  { id: 12, name: "Yok" },
-  { id: 13, name: "Ethan" },
-  { id: 1, name: "Chris" },
   { id: 14, name: "Christian" },
 ];
 
