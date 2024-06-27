@@ -1,6 +1,5 @@
 const employees = [
   { id: 10, name: "Min" },
-  { id: 11, name: "Candy" },
   { id: 12, name: "Yok" },
   { id: 13, name: "Ethan" },
   { id: 1, name: "Chris" },
