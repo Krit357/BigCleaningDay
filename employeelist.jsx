@@ -1,5 +1,4 @@
 const employees = [
-  { id: 10, name: "Min" },
   { id: 12, name: "Yok" },
   { id: 13, name: "Ethan" },
   { id: 1, name: "Chris" },
@@ -12,6 +11,7 @@ const employees = [
   { id: 8, name: "Sky" },
   { id: 9, name: "Hut" },
   { id: 14, name: "Christian" },
+  { id: 10, name: "Min" },
 ];
 
 export default employees;
