@@ -175,7 +175,35 @@ const DailyCleaning = () => {
 
   const MyDocument = () => (
     <Document>
-      {/* <Page size="A4" style={styles.page}>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>June</Text>
+          <View style={styles.calendar}>{generateMonth(1, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>June</Text>
+          <View style={styles.calendar}>{generateMonth(2, 29)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>June</Text>
+          <View style={styles.calendar}>{generateMonth(3, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>June</Text>
+          <View style={styles.calendar}>{generateMonth(4, 30)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text style={styles.monthTitle}>June</Text>
           <View style={styles.calendar}>{generateMonth(5, 30)}</View>
@@ -187,7 +215,7 @@ const DailyCleaning = () => {
           <Text style={styles.monthTitle}>July</Text>
           <View style={styles.calendar}>{generateMonth(6, 31)}</View>
         </View>
-      </Page> */}
+      </Page>
 
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
