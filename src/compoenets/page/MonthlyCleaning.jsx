@@ -5,141 +5,147 @@ import { v4 as uuidv4 } from "uuid";
 import UlContainer from "../code/UlContainer";
 import Button from "../code/Button";
 import Header from "../code/Header";
+import SideBar from "../sideBar/SideBar";
+
+const peoples = [
+  "Yok",
+  "Ethan",
+  "Chris",
+  "Day",
+  "Mook",
+  "Rose",
+  "Moss",
+  "Bella",
+  "Lucus",
+  "Sky",
+  "Hut",
+  "Christian",
+  "Min",
+];
+
+const initialDuties = {
+  foodAndShelfCleaning: {
+    task: "Food and Shelf cleaning",
+    requiredPersons: 3,
+    assignedPersons: [],
+  },
+  dusting: {
+    task: "Dusting",
+    requiredPersons: 1,
+    assignedPersons: [],
+  },
+  sweepFloor: {
+    task: "Sweep the floor",
+    requiredPersons: 4,
+    assignedPersons: [],
+  },
+  mopFloor: {
+    task: "Mop the floor",
+    requiredPersons: 4,
+    assignedPersons: [],
+  },
+};
+
+const shuffleArray = (arr) => {
+  let shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 const MonthlyCleaning = () => {
-  const [addText, setAddText] = useState("");
-  const [submitText, setSubmitText] = useState([]);
-  const [hide, setHide] = useState(true);
-  const [duties, setDuties] = useState(null);
+  const [duties, setDuties] = useState(() => {
+    // Load duties from localStorage if available, otherwise use initialDuties
+    const savedDuties = localStorage.getItem("cleaningDuties");
+    return savedDuties ? JSON.parse(savedDuties) : initialDuties;
+  });
 
-  const handleChange = (e) => {
-    setAddText(e.target.value);
-  };
+  const [lastAssignment, setLastAssignment] = useState(() => {
+    // Load lastAssignment from localStorage if available
+    const savedLastAssignment = localStorage.getItem("lastAssignment");
+    return savedLastAssignment
+      ? JSON.parse(savedLastAssignment)
+      : {
+          foodAndShelfCleaning: [],
+          dusting: [],
+          sweepFloor: [],
+          mopFloor: [],
+        };
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!addText) {
-      return alert("โปรดกรอกข้อมูล");
-    }
-
-    const newEmployee = { id: submitText.length + 1, name: addText };
-    setSubmitText([...submitText, newEmployee]);
-    setAddText("");
-  };
-
-  const shuffleArray = (array) => {
-    const shuffled = [...array].sort(() => Math.random() - 0.5);
-    return shuffled;
-  };
-
+  // Save to localStorage whenever duties or lastAssignment change
   useEffect(() => {
-    const shuffledEmployees = shuffleArray(employees.concat(submitText));
-    setDuties(assignDuties(shuffledEmployees));
-  }, [submitText]); // Trigger shuffle and duty assignment when submitText changes
+    console.log("Saving to localStorage");
+    localStorage.setItem("cleaningDuties", JSON.stringify(duties));
+    localStorage.setItem("lastAssignment", JSON.stringify(lastAssignment));
+  }, [duties, lastAssignment]);
 
-  const assignDuties = (shuffledEmployees) => {
-    const foodAndShelf = shuffledEmployees.slice(0, 3);
-    const dustTheFurniture = shuffledEmployees.slice(3, 4);
-    const sweepTheFloor = shuffledEmployees.slice(4, 8);
-    const mopTheFloor = shuffledEmployees.slice(8, 12);
-    const meetingRoom = shuffledEmployees.slice(12);
+  const assignDuties = () => {
+    let availablePeople = shuffleArray(peoples);
+    const newDuties = { ...duties };
 
-    return {
-      foodAndShelf,
-      dustTheFurniture,
-      sweepTheFloor,
-      mopTheFloor,
-      meetingRoom,
-    };
-  };
+    Object.keys(newDuties).forEach((task) => {
+      const { requiredPersons } = newDuties[task];
+      let newAssignments = [];
 
-  const toggleDutyVisibility = () => {
-    setHide(!hide);
+      newAssignments = availablePeople
+        .filter((person) => !lastAssignment[task].includes(person))
+        .slice(0, requiredPersons);
+
+      if (newAssignments.length < requiredPersons) {
+        const remainingPeople = availablePeople.slice(newAssignments.length);
+        newAssignments = newAssignments.concat(
+          remainingPeople.slice(0, requiredPersons - newAssignments.length)
+        );
+      }
+      newDuties[task].assignedPersons = newAssignments;
+
+      availablePeople = availablePeople.filter(
+        (person) => !newAssignments.includes(person)
+      );
+    });
+
+    setDuties(newDuties);
+    setLastAssignment({
+      foodAndShelfCleaning: [...newDuties.foodAndShelfCleaning.assignedPersons],
+      dusting: [...newDuties.dusting.assignedPersons],
+      sweepFloor: [...newDuties.sweepFloor.assignedPersons],
+      mopFloor: [...newDuties.mopFloor.assignedPersons],
+    });
   };
 
   return (
     <PageLayout>
-      <div className="flex flex-col h-screen">
-        <Header>Monthly Cleaning เริ่มตอน 16:00 น.</Header>
-        <div className="p-2">
-          <form
-            onSubmit={handleSubmit}
-            className="flex justify-center items-center h-15"
-          >
-            <label>Add Employee</label>
-            <input
-              type="text"
-              placeholder="add here..."
-              className="border rounded pl-2 ml-2 my-3"
-              onChange={handleChange}
-              value={addText}
-            />
-            <Button
-              className=" ml-5 px-3 bg-slate-200 rounded"
-              onClick={handleSubmit}
-              type="submit"
-            >
-              Add
-            </Button>
-          </form>
-
-          <div className="flex flex-col justify-center items-center  w-25 h-auto">
-            <p className="text-lg font-semibold text-center">Employee List</p>
-            <ul className="flex justify-center">
-              {[...employees, ...submitText].map((emp) => (
-                <li
-                  className="flex justify-center items-centerfirst:ml-0 ml-3 rounded drop-shadow "
-                  key={uuidv4()}
-                >
-                  {emp.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <Button onClick={toggleDutyVisibility}>
-              {hide ? "Show" : "Hide"} Duty
-            </Button>
-            {!hide && duties && (
-              <div className="flex flex-col border-2 px-5 rounded ">
-                <h2 className="font-semibold text-xl text-center mb-2">Duty</h2>
-                <div className="flex flex-col items-center text-center">
-                  <div>
-                    <div className="pb-1">
-                      <UlContainer duties={duties.foodAndShelf}>
-                        Food and Shelf
-                      </UlContainer>
-                    </div>
-                  </div>
-                  <div className="pb-1">
-                    <UlContainer duties={duties.dustTheFurniture}>
-                      Dust The Furniture
-                    </UlContainer>
-                  </div>
-                  <div className="pb-1">
-                    <UlContainer duties={duties.sweepTheFloor}>
-                      Sweep The Floor
-                    </UlContainer>
-                  </div>
-                  <div className="pb-1">
-                    <UlContainer duties={duties.mopTheFloor}>
-                      Mop The Floor
-                    </UlContainer>
-                  </div>
-                  <div className="pb-1">
-                    <UlContainer duties={duties.meetingRoom}>
-                      Meeting Room
-                    </UlContainer>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+      <div className="flex flex-col h-screen justify-center items-center bg-slate-100">
+        <h1 className="text-center font-bold text-xl">
+          Cleaning Duty Assignment
+        </h1>
+        <h3>{peoples.join(", ")}</h3>
+        <Button
+          className="bg-slate-200 rounded-md p-2 mt-4"
+          onClick={assignDuties}
+        >
+          Assign Duties
+        </Button>
+        <div className="mt-8 w-96 bg-slate-200">
+          {Object.keys(duties).map((taskKey) => (
+            <div key={taskKey} className="bg-gray-300 m-5 p-2 rounded-md">
+              <h2 className="text-center mt-4 font-bold	">
+                {duties[taskKey].task}
+              </h2>
+              <p className="text-center mt-4 mb-4">
+                Assigned Persons:{" "}
+                <span className="font-bold">
+                  {duties[taskKey].assignedPersons.join(", ") || "None"}
+                </span>
+              </p>
+            </div>
+          ))}
         </div>
-        <footer className="bg-slate-300 mt-auto flex justify-center py-2">
-          🍸 Snack น้ำบ้านไม้ 🍸
+        <footer className="mt-6 bg-orange-50 w-full flex justify-center items-center text-center h-24">
+          เครื่องดื่ม 🍸บ้านไม้🍸
         </footer>
       </div>
     </PageLayout>
