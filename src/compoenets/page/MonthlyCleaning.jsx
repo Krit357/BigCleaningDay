@@ -83,30 +83,40 @@ const MonthlyCleaning = () => {
   }, [duties, lastAssignment]);
 
   const assignDuties = () => {
+    // Deep copy of the duties object
+    const newDuties = JSON.parse(JSON.stringify(duties));
     let availablePeople = shuffleArray(peoples);
-    const newDuties = { ...duties };
 
     Object.keys(newDuties).forEach((task) => {
       const { requiredPersons } = newDuties[task];
       let newAssignments = [];
 
+      // Ensure that lastAssignment[task] exists and is an array
+      const lastTaskAssignment = lastAssignment[task] || [];
+
+      // Filter out the people who were assigned last time to avoid repetition
       newAssignments = availablePeople
-        .filter((person) => !lastAssignment[task].includes(person))
+        .filter((person) => !lastTaskAssignment.includes(person))
         .slice(0, requiredPersons);
 
+      // If there are not enough unique people, assign from remaining
       if (newAssignments.length < requiredPersons) {
         const remainingPeople = availablePeople.slice(newAssignments.length);
         newAssignments = newAssignments.concat(
           remainingPeople.slice(0, requiredPersons - newAssignments.length)
         );
       }
+
+      // Assign new people to the task
       newDuties[task].assignedPersons = newAssignments;
 
+      // Remove assigned people from the available pool
       availablePeople = availablePeople.filter(
         (person) => !newAssignments.includes(person)
       );
     });
 
+    // Update the duties and lastAssignment state
     setDuties(newDuties);
     setLastAssignment({
       foodAndShelfCleaning: [...newDuties.foodAndShelfCleaning.assignedPersons],
