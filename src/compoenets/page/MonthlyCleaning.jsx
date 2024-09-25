@@ -27,25 +27,25 @@ const initialDuties = {
   foodAndShelfCleaning: {
     task: "Food and Shelf cleaning",
     requiredPersons: 3,
-    assignedPersons: [],
+    assignedPersons: ["Yok", "Moss", "Min"],
   },
-  dusting: {
-    task: "Dusting",
-    requiredPersons: 1,
-    assignedPersons: [],
-  },
+  dusting: { task: "Dusting", requiredPersons: 1, assignedPersons: ["Sky"] },
   sweepFloor: {
     task: "Sweep the floor",
     requiredPersons: 4,
-    assignedPersons: [],
+    assignedPersons: ["Bella", "Ethan", "Hut", "Christian"],
   },
   mopFloor: {
     task: "Mop the floor",
     requiredPersons: 4,
-    assignedPersons: [],
+    assignedPersons: ["Mook", "Day", "Lucus", "Rose"],
   },
+  meetingRoom: {
+    task: "Meeting room",
+    requiredPersons: 1,
+    assignedPersons: ["Chris"],
+  }, // Ensure this is included
 };
-
 const shuffleArray = (arr) => {
   let shuffled = [...arr];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -63,7 +63,6 @@ const MonthlyCleaning = () => {
   });
 
   const [lastAssignment, setLastAssignment] = useState(() => {
-    // Load lastAssignment from localStorage if available
     const savedLastAssignment = localStorage.getItem("lastAssignment");
     return savedLastAssignment
       ? JSON.parse(savedLastAssignment)
@@ -72,6 +71,7 @@ const MonthlyCleaning = () => {
           dusting: [],
           sweepFloor: [],
           mopFloor: [],
+          meetingRoom: [], // Ensure it's here
         };
   });
 
@@ -83,23 +83,21 @@ const MonthlyCleaning = () => {
   }, [duties, lastAssignment]);
 
   const assignDuties = () => {
-    // Deep copy of the duties object
-    const newDuties = JSON.parse(JSON.stringify(duties));
+    const newDuties = JSON.parse(JSON.stringify(duties)); // Deep copy the duties object
     let availablePeople = shuffleArray(peoples);
+
+    console.log(Object.keys(newDuties)); // Check that meetingRoom is present
 
     Object.keys(newDuties).forEach((task) => {
       const { requiredPersons } = newDuties[task];
       let newAssignments = [];
 
-      // Ensure that lastAssignment[task] exists and is an array
       const lastTaskAssignment = lastAssignment[task] || [];
 
-      // Filter out the people who were assigned last time to avoid repetition
       newAssignments = availablePeople
         .filter((person) => !lastTaskAssignment.includes(person))
         .slice(0, requiredPersons);
 
-      // If there are not enough unique people, assign from remaining
       if (newAssignments.length < requiredPersons) {
         const remainingPeople = availablePeople.slice(newAssignments.length);
         newAssignments = newAssignments.concat(
@@ -107,10 +105,7 @@ const MonthlyCleaning = () => {
         );
       }
 
-      // Assign new people to the task
       newDuties[task].assignedPersons = newAssignments;
-
-      // Remove assigned people from the available pool
       availablePeople = availablePeople.filter(
         (person) => !newAssignments.includes(person)
       );
@@ -123,9 +118,11 @@ const MonthlyCleaning = () => {
       dusting: [...newDuties.dusting.assignedPersons],
       sweepFloor: [...newDuties.sweepFloor.assignedPersons],
       mopFloor: [...newDuties.mopFloor.assignedPersons],
+      meetingRoom: [...newDuties.meetingRoom.assignedPersons], // Ensure meetingRoom is updated here
     });
   };
 
+  console.log(duties);
   return (
     <PageLayout>
       <div className="flex flex-col h-screen justify-center items-center bg-slate-100">
@@ -139,16 +136,17 @@ const MonthlyCleaning = () => {
         >
           Assign Duties
         </Button>
-        <div className="mt-8 w-96 bg-slate-200">
+        <div className=" w-96 bg-slate-200">
           {Object.keys(duties).map((taskKey) => (
             <div key={taskKey} className="bg-gray-300 m-5 p-2 rounded-md">
-              <h2 className="text-center mt-4 font-bold	">
-                {duties[taskKey].task}
+              <h2 className="text-center  font-bold">
+                {duties[taskKey].task} {/* This should render the task name */}
               </h2>
-              <p className="text-center mt-4 mb-4">
+              <p className="text-center  mb-4">
                 Assigned Persons:{" "}
                 <span className="font-bold">
-                  {duties[taskKey].assignedPersons.join(", ") || "None"}
+                  {duties[taskKey].assignedPersons.join(", ") || "None"}{" "}
+                  {/* This should render the assigned persons */}
                 </span>
               </p>
             </div>
