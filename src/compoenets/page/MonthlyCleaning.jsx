@@ -27,23 +27,23 @@ const initialDuties = {
   foodAndShelfCleaning: {
     task: "Food and Shelf cleaning",
     requiredPersons: 3,
-    assignedPersons: ["Yok", "Moss", "Min"],
+    assignedPersons: ["Ethan", "Yok", "Chris"],
   },
-  dusting: { task: "Dusting", requiredPersons: 1, assignedPersons: ["Sky"] },
+  dusting: { task: "Dusting", requiredPersons: 1, assignedPersons: ["Min"] },
   sweepFloor: {
     task: "Sweep the floor",
     requiredPersons: 4,
-    assignedPersons: ["Bella", "Ethan", "Hut", "Christian"],
+    assignedPersons: ["Rose", "Day", "Sky", "Lucus"],
   },
   mopFloor: {
     task: "Mop the floor",
     requiredPersons: 4,
-    assignedPersons: ["Mook", "Day", "Lucus", "Rose"],
+    assignedPersons: ["Christian", "Mook", "Moss", "Hut"],
   },
   meetingRoom: {
     task: "Meeting room",
     requiredPersons: 1,
-    assignedPersons: ["Chris"],
+    assignedPersons: ["Bella"],
   }, // Ensure this is included
 };
 const shuffleArray = (arr) => {
