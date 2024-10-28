@@ -86,20 +86,21 @@ const MonthlyCleaning = () => {
     const newDuties = JSON.parse(JSON.stringify(duties)); // Deep copy the duties object
     let availablePeople = shuffleArray(peoples);
 
-    console.log(Object.keys(newDuties)); // Check that meetingRoom is present
-
     Object.keys(newDuties).forEach((task) => {
       const { requiredPersons } = newDuties[task];
       let newAssignments = [];
 
       const lastTaskAssignment = lastAssignment[task] || [];
 
+      // กรองคนที่ไม่เคยได้รับมอบหมายจากคนที่เหลือ
       newAssignments = availablePeople
         .filter((person) => !lastTaskAssignment.includes(person))
         .slice(0, requiredPersons);
 
       if (newAssignments.length < requiredPersons) {
-        const remainingPeople = availablePeople.slice(newAssignments.length);
+        const remainingPeople = availablePeople.filter(
+          (person) => !newAssignments.includes(person)
+        );
         newAssignments = newAssignments.concat(
           remainingPeople.slice(0, requiredPersons - newAssignments.length)
         );
@@ -113,13 +114,14 @@ const MonthlyCleaning = () => {
 
     // Update the duties and lastAssignment state
     setDuties(newDuties);
-    setLastAssignment({
-      foodAndShelfCleaning: [...newDuties.foodAndShelfCleaning.assignedPersons],
-      dusting: [...newDuties.dusting.assignedPersons],
-      sweepFloor: [...newDuties.sweepFloor.assignedPersons],
-      mopFloor: [...newDuties.mopFloor.assignedPersons],
-      meetingRoom: [...newDuties.meetingRoom.assignedPersons], // Ensure meetingRoom is updated here
-    });
+    setLastAssignment(
+      Object.fromEntries(
+        Object.keys(newDuties).map((task) => [
+          task,
+          [...newDuties[task].assignedPersons],
+        ])
+      )
+    );
   };
 
   console.log(duties);
