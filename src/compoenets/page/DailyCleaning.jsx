@@ -259,6 +259,13 @@ const DailyCleaning = () => {
           <View style={styles.calendar}>{generateMonth(11, 31)}</View>
         </View>
       </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>January</Text>
+          <View style={styles.calendar}>{generateMonth(12, 31)}</View>
+        </View>
+      </Page>
     </Document>
   );
 
