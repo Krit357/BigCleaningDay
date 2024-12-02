@@ -139,27 +139,19 @@ const DailyCleaning = () => {
       }
 
       const isWeekend = dayOfWeek === "Saturday" || dayOfWeek === "Sunday";
+
+      // ----------------- ใส่วันหยุด -----------------//
+
       const holidayDate = [
-        "01/01/2567",
-        "02/01/2567",
-        "26/02/2567",
-        "08/04/2567",
-        "15/04/2567",
-        "16/04/2567",
-        "17/04/2567",
-        "01/05/2567",
-        "06/05/2567",
-        "22/05/2567",
-        "03/06/2567",
-        "22/07/2567",
-        "29/07/2567",
-        "12/08/2567",
-        "14/10/2567",
-        "23/10/2567",
-        "05/12/2567",
-        "10/12/2567",
-        "31/12/2567",
+        "01/01/2568",
+        "12/02/2568",
+        "07/04/2568",
+        "14/04/2568",
+        "15/04/2568",
+        "16/04/2568",
       ];
+
+      // -------------------------------------------//
       const isHoliday = holidayDate.includes(formattedDate);
 
       return (
@@ -178,83 +170,6 @@ const DailyCleaning = () => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.monthTitle}>January</Text>
-          <View style={styles.calendar}>{generateMonth(1, 31)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>February</Text>
-          <View style={styles.calendar}>{generateMonth(2, 29)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>March</Text>
-          <View style={styles.calendar}>{generateMonth(3, 31)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>April</Text>
-          <View style={styles.calendar}>{generateMonth(4, 30)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>May</Text>
-          <View style={styles.calendar}>{generateMonth(5, 31)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>June</Text>
-          <View style={styles.calendar}>{generateMonth(6, 30)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>July</Text>
-          <View style={styles.calendar}>{generateMonth(6, 31)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>August</Text>
-          <View style={styles.calendar}>{generateMonth(7, 31)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>September</Text>
-          <View style={styles.calendar}>{generateMonth(8, 30)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>October</Text>
-          <View style={styles.calendar}>{generateMonth(9, 31)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.monthTitle}>November</Text>
-          <View style={styles.calendar}>{generateMonth(10, 30)}</View>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
           <Text style={styles.monthTitle}>December</Text>
           <View style={styles.calendar}>{generateMonth(11, 31)}</View>
         </View>
@@ -264,6 +179,83 @@ const DailyCleaning = () => {
         <View style={styles.section}>
           <Text style={styles.monthTitle}>January</Text>
           <View style={styles.calendar}>{generateMonth(12, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>February</Text>
+          <View style={styles.calendar}>{generateMonth(13, 28)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>March</Text>
+          <View style={styles.calendar}>{generateMonth(14, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>April</Text>
+          <View style={styles.calendar}>{generateMonth(15, 30)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>May</Text>
+          <View style={styles.calendar}>{generateMonth(16, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>June</Text>
+          <View style={styles.calendar}>{generateMonth(17, 30)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>July</Text>
+          <View style={styles.calendar}>{generateMonth(18, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>August</Text>
+          <View style={styles.calendar}>{generateMonth(19, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>September</Text>
+          <View style={styles.calendar}>{generateMonth(20, 30)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>October</Text>
+          <View style={styles.calendar}>{generateMonth(21, 31)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>November</Text>
+          <View style={styles.calendar}>{generateMonth(22, 30)}</View>
+        </View>
+      </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.monthTitle}>December</Text>
+          <View style={styles.calendar}>{generateMonth(23, 31)}</View>
         </View>
       </Page>
     </Document>
